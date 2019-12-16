@@ -17,17 +17,21 @@ export class Project {
 
         try {
             fs.writeFileSync(path.join(location, '.vscode', 'tasks.json'), JSON.stringify(content.tasks_json, null, 4));
+            fs.writeFileSync(path.join(location, '.vscode', 'settings.json'), JSON.stringify(content.settings_json, null, 4));
             fs.writeFileSync(path.join(location, '.vscode', 'launch.json'), JSON.stringify(content.launch_json, null, 4));
+            fs.writeFileSync(path.join(location, '.clang-format'), content.clang_format);
             switch (type) {
                 case 'c':
                     fs.writeFileSync(path.join(location, 'src', 'main.c'), content.main_c);
                     fs.writeFileSync(path.join(location, 'Makefile'), content.makefile_c);
+                    fs.writeFileSync(path.join(location, '.gitignore'), content.gitignore_c);
                     vscode.workspace.openTextDocument(path.join(location, 'src', 'main.c'))
                         .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
                     break;
                 case 'cpp':
                     fs.writeFileSync(path.join(location, 'src', 'main.cpp'), content.main_cpp);
                     fs.writeFileSync(path.join(location, 'Makefile'), content.makefile_cpp);
+                    fs.writeFileSync(path.join(location, '.gitignore'), content.gitignore_cpp);
                     vscode.workspace.openTextDocument(path.join(location, 'src', 'main.cpp'))
                         .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
                     break;
